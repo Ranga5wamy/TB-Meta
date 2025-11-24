@@ -39,7 +39,7 @@ cohorts <- tibble::tribble(
   # Biobank Japan
   "BBJ",          file.path(base_dir, "BBJ",           "Japan_One_P.txt"),               "GRCh37",     7800,   170871,
   # Mass Gen Brigham
-  "MGB",          file.path(base_dir, "MGB,"           "MGB.tsv"),                     "GRCh38",      447,    41361,
+  "MGB",          file.path(base_dir, "MGB",           "MGB.tsv"),                     "GRCh38",      447,    41361,
   # Soumya
   "Soumya",       file.path(base_dir, "Soumya",        "Soumya_clean.tsv"),      "GRCh37",     2160,     1820,
   # Taiwan Biobank
@@ -62,7 +62,7 @@ process_cohort <- function(cohort, in_path, ref_genome, CaseN, ControlN, dbsnp_d
 
   out_gz      <- file.path(out_dir, paste0(cohort, "_Munge.tsv.gz"))
   out_tidy    <- file.path(out_dir, paste0(cohort, "_Post_Munge_And_Tidy.tsv"))
- out_qq_pdf  <- file.path(out_dir, paste0(cohort, "_QQ_FRQbin.png"))
+  out_qq_pdf  <- file.path(out_dir, paste0(cohort, "_QQ_FRQbin.png"))
 
   ## 1. MungeSumstats
   Hmm <- format_sumstats(
