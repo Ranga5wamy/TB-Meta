@@ -93,6 +93,14 @@ process_cohort <- function(cohort, in_path, ref_genome, CaseN, ControlN, dbsnp_d
       dbsnp_dir
     )
   }
+Next_Step <- Next_Step %>%
+  filter(
+    is.finite(SE),
+    SE > 1e-4,           # SE should never be this small for GWAS
+    SE < 10,             # SE should never be this large either
+    is.finite(Z),
+    abs(Z) < 40          # |Z| > 40 is essentially impossible in real GWAS
+  )
 
   data.table::fwrite(
     Next_Step,
@@ -126,13 +134,15 @@ process_cohort <- function(cohort, in_path, ref_genome, CaseN, ControlN, dbsnp_d
       y = "Observed -log10(P)"
     )
 ggsave(
-    filename = out_qq_pdf,
-    plot     = QQs,
-    width    = 8,
-    height   = 6,
-    units = "in",
-    dpi = 300
-  )
+  filename = out_qq_pdf,
+  plot     = QQs,
+  width    = 8,
+  height   = 6,
+  units    = "in",
+  dpi      = 300,
+  device   = "png"
+)
+
 
   message("Finished ", cohort,
           "\n  Munge: ", out_gz,
